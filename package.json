@@ -13,7 +13,6 @@
     "@codemirror/lang-javascript": "^6.2.3",
     "@codemirror/state": "^6.5.2",
     "@codemirror/view": "^6.36.5",
-    "@ffmpeg/ffmpeg": "^0.12.15",
     "@uiw/codemirror-theme-dracula": "^4.23.10",
     "@uiw/react-codemirror": "^4.23.10",
     "framer-motion": "^12.6.2",
