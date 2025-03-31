@@ -9,6 +9,7 @@ import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import ErrorPage from "./pages/ErrorPage";
 import theme from "./utils/theme";
+import AboutPage from "./pages/AboutUs";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         {/* Public Layout for Homepage */}
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Homepage />} />
+          <Route path="about" element={<AboutPage />} />
         </Route>
 
         {/* App Layout for /app functionality */}

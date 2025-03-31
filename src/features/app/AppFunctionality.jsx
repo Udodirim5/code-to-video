@@ -4,7 +4,9 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { EditorView } from "@codemirror/view";
 import { dracula } from "@uiw/codemirror-theme-dracula";
-import { Download, Play, RotateCcw } from "lucide-react";
+import { Download, Play, RotateCcw, Settings } from "lucide-react";
+import Modal from "../../ui/Modal";
+import VideoSettings from "./VideoSettings";
 
 const AppFunctionality = () => {
   const [code, setCode] = useState(
@@ -106,6 +108,8 @@ const AppFunctionality = () => {
     setCode("");
   };
 
+  const openSettings = () => {};
+
   return (
     <StyledApp>
       <Container>
@@ -123,26 +127,41 @@ const AppFunctionality = () => {
             )}
           </Fixed>
 
-          <div style={{ flex: 1, overflow: "auto", borderRadius: "6px", }}>
-          <CodeMirror
-            value={code}
-            onChange={setCode}
-            extensions={[javascript(), EditorView.lineWrapping]}
-            theme={dracula}
-            height="100%"
+          <div style={{ flex: 1, overflow: "auto", borderRadius: "6px" }}>
+            <CodeMirror
+              value={code}
+              onChange={setCode}
+              extensions={[javascript(), EditorView.lineWrapping]}
+              theme={dracula}
+              height="100%"
             />
-            </div>
+          </div>
         </CodePanel>
 
         <AnimationPanel>
           <Fixed>
             <h2>Preview</h2>
             <div style={{ display: "flex", gap: "10px" }}>
+              <Modal>
+                <Modal.Open opensWindowName="window1">
+                  <IconButton
+                    onClick={openSettings}
+                    disabled={isAnimating}
+                    title="Start Animation"
+                  >
+                    <Settings color="white" size={24} />
+                  </IconButton>
+                </Modal.Open>
+                <Modal.Window name="window1">
+                  <VideoSettings />
+                </Modal.Window>
+              </Modal>
+
               <IconButton
                 onClick={startAnimation}
                 disabled={isAnimating}
                 title="Start Animation"
-                >
+              >
                 <Play color="white" size={24} />
               </IconButton>
               <IconButton

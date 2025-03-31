@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { Code, Github, Twitter, Linkedin, Menu, X } from "lucide-react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const ref = useOutsideClick(() => setMobileMenuOpen(false));
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -18,30 +21,32 @@ const Header = () => {
   const navSignIn = (e) => {
     e.preventDefault();
     navigate("/signin");
-  }
+  };
   const navSignUp = (e) => {
     e.preventDefault();
     navigate("/signup");
-  }
+  };
 
   return (
     <HeaderContainer scrolled={scrolled}>
       <HeaderContent>
-        <Logo href="/">
-          <Code size={28} />
-          <span>CodeToVideo</span>
+        <Logo>
+          <Link to="/">
+            <Code size={28} />
+            <span>CodeToVideo</span>
+          </Link>
         </Logo>
 
         <NavLinks>
-          <NavLink href="#features">Features</NavLink>
-          <NavLink href="#about">About</NavLink>
-          <NavLink href="#pricing">Pricing</NavLink>
-          <NavLink href="#docs">Docs</NavLink>
+          <NavLink to="#features">Features</NavLink>
+          <NavLink to="/about">About</NavLink>
+          <NavLink to="#pricing">Pricing</NavLink>
+          <NavLink to="#docs">Docs</NavLink>
         </NavLinks>
 
         <AuthButtons>
           <LoginButton onClick={navSignIn}>Log in</LoginButton>
-          <SignUpButton onClick={navSignUp} >Sign up free</SignUpButton>
+          <SignUpButton onClick={navSignUp}>Sign up free</SignUpButton>
         </AuthButtons>
 
         <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -49,11 +54,11 @@ const Header = () => {
         </MobileMenuButton>
       </HeaderContent>
 
-      <MobileMenu open={mobileMenuOpen}>
-        <MobileNavLink href="#features">Features</MobileNavLink>
-        <MobileNavLink href="#about">About</MobileNavLink>
-        <MobileNavLink href="#pricing">Pricing</MobileNavLink>
-        <MobileNavLink href="#docs">Docs</MobileNavLink>
+      <MobileMenu ref={ref} open={mobileMenuOpen}>
+        <NavLink to="#features">Features</NavLink>
+        <NavLink to="/about">About</NavLink>
+        <NavLink to="#pricing">Pricing</NavLink>
+        <NavLink to="#docs">Docs</NavLink>
         <MobileAuthButtons>
           <MobileLoginButton>Log in</MobileLoginButton>
           <MobileSignUpButton>Sign up free</MobileSignUpButton>
@@ -91,22 +96,24 @@ const HeaderContent = styled.div`
   justify-content: space-between;
 `;
 
-const Logo = styled.a`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: white;
-  text-decoration: none;
-  transition: transform 0.2s;
+const Logo = styled.div`
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.2s;
 
-  &:hover {
-    transform: scale(1.05);
-  }
+    &:hover {
+      transform: scale(1.05);
+    }
 
-  svg {
-    color: #8a6eff;
+    svg {
+      color: #8a6eff;
+    }
   }
 `;
 
@@ -117,32 +124,32 @@ const NavLinks = styled.nav`
   @media (max-width: 768px) {
     display: none;
   }
-`;
 
-const NavLink = styled.a`
-  color: rgba(255, 255, 255, 0.8);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-  position: relative;
+  a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
 
-  &:hover {
-    color: white;
-  }
+    &:hover {
+      color: white;
+    }
 
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #6e45e2, #88d3ce);
-    transition: width 0.3s;
-  }
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #6e45e2, #88d3ce);
+      transition: width 0.3s;
+    }
 
-  &:hover::after {
-    width: 100%;
+    &:hover::after {
+      width: 100%;
+    }
   }
 `;
 
@@ -204,17 +211,17 @@ const MobileMenu = styled.div`
   background: rgba(13, 19, 33, 0.98);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-`;
 
-const MobileNavLink = styled.a`
-  color: rgba(255, 255, 255, 0.8);
-  text-decoration: none;
-  font-weight: 500;
-  padding: 0.75rem 0;
-  transition: color 0.2s;
+  a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.75rem 0;
+    transition: color 0.2s;
 
-  &:hover {
-    color: white;
+    &:hover {
+      color: white;
+    }
   }
 `;
 
