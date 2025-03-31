@@ -1,0 +1,36 @@
+{
+  "name": "code-to-video",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.3",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.36.5",
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@uiw/codemirror-theme-dracula": "^4.23.10",
+    "@uiw/react-codemirror": "^4.23.10",
+    "framer-motion": "^12.6.2",
+    "lucide-react": "^0.485.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "styled-components": "^6.1.16"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.23.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "prettier": "^3.5.3",
+    "vite": "^5.2.0"
+  }
+}
