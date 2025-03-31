@@ -4,18 +4,34 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { EditorView } from "@codemirror/view";
 import { dracula } from "@uiw/codemirror-theme-dracula";
-import { Download, Play } from "lucide-react";
+import { Download, Play, RotateCcw } from "lucide-react";
 
-const App = () => {
+const AppFunctionality = () => {
   const [code, setCode] = useState(
     `// Welcome to CodeAnim\nfunction helloWorld() {\n  console.log('Hello, World!');\n  return "Animation complete!";\n}`
   );
   const [typedCode, setTypedCode] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
+  const [showCursor, setShowCursor] = useState(true);
   const animationRef = useRef(null);
+  const cursorRef = useRef(null);
   const canvasRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const recordedChunksRef = useRef([]);
+  const outputRef = useRef(null);
+
+  useEffect(() => {
+    cursorRef.current = setInterval(() => {
+      setShowCursor((prev) => !prev);
+    }, 500);
+    return () => clearInterval(cursorRef.current);
+  }, []);
+
+  setTimeout(() => {
+    if (outputRef.current) {
+      outputRef.current.scrollTop = outputRef.current.scrollHeight;
+    }
+  }, 0);
 
   const startAnimation = () => {
     setIsAnimating(true);
@@ -56,13 +72,23 @@ const App = () => {
     ctx.fillStyle = "#ffffff";
 
     const lines = text.split("\n");
-    const maxLines = Math.floor(360 / 24); // Max lines that fit in canvas
+    const maxLines = Math.floor(360 / 24);
     const start = Math.max(0, lines.length - maxLines);
     const visibleLines = lines.slice(start);
 
     visibleLines.forEach((line, index) => {
       ctx.fillText(line, 20, 50 + index * 24);
     });
+
+    // Blinking Cursor
+    if (showCursor) {
+      const lastLine = visibleLines[visibleLines.length - 1] || "";
+      ctx.fillText(
+        "|",
+        20 + ctx.measureText(lastLine).width,
+        50 + (visibleLines.length - 1) * 24
+      );
+    }
   };
 
   const downloadRecording = () => {
@@ -76,44 +102,74 @@ const App = () => {
     document.body.removeChild(a);
   };
 
+  const emptyCode = () => {
+    setCode("");
+  };
+
   return (
     <StyledApp>
       <Container>
         <CodePanel>
-          <h2>Code Editor</h2>
+          <Fixed>
+            <h2>Code Editor</h2>
+            {code && (
+              <IconButton
+                onClick={emptyCode}
+                disabled={isAnimating}
+                title="Start Animation"
+              >
+                <RotateCcw color="white" size={24} />
+              </IconButton>
+            )}
+          </Fixed>
+
+          <div style={{ flex: 1, overflow: "auto", borderRadius: "6px", }}>
           <CodeMirror
             value={code}
             onChange={setCode}
             extensions={[javascript(), EditorView.lineWrapping]}
             theme={dracula}
             height="100%"
-          />
+            />
+            </div>
         </CodePanel>
 
         <AnimationPanel>
-          <h2>Preview</h2>
+          <Fixed>
+            <h2>Preview</h2>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <IconButton
+                onClick={startAnimation}
+                disabled={isAnimating}
+                title="Start Animation"
+                >
+                <Play color="white" size={24} />
+              </IconButton>
+              <IconButton
+                disabled={isAnimating}
+                onClick={downloadRecording}
+                title="Download Recording"
+              >
+                <Download color="white" size={24} />
+              </IconButton>
+            </div>
+          </Fixed>
           <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
-          <CodeMirror
-            value={typedCode}
-            extensions={[javascript(), EditorView.lineWrapping]}
-            theme={dracula}
-            readOnly
-          />
 
-          <div style={{ display: "flex", gap: "10px" }}>
-            <IconButton
-              onClick={startAnimation}
-              disabled={isAnimating}
-              title="Start Animation"
-            >
-              <Play color="white" size={24} />
-            </IconButton>
-            <IconButton
-              onClick={downloadRecording}
-              title="Download Recording"
-            >
-              <Download color="white" size={24} />
-            </IconButton>
+          <div
+            ref={outputRef}
+            style={{
+              flex: 1,
+              overflow: "auto",
+              borderRadius: "6px",
+            }}
+          >
+            <CodeMirror
+              value={typedCode + (showCursor ? "|" : "")}
+              extensions={[javascript(), EditorView.lineWrapping]}
+              theme={dracula}
+              readOnly
+            />
           </div>
         </AnimationPanel>
       </Container>
@@ -121,12 +177,11 @@ const App = () => {
   );
 };
 
-export default App;
+export default AppFunctionality;
 
 const StyledApp = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100dvh;
   background: #0a0e17;
   color: #e0e0e0;
   font-family: "Fira Code", monospace;
@@ -159,11 +214,12 @@ const CodePanel = styled(Panel)`
   flex: 1;
   display: flex;
   flex-direction: column;
-  max-height: 80vh;
+  height: 80vh;
   overflow: auto;
 `;
 
 const AnimationPanel = styled(Panel)`
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -190,4 +246,15 @@ const IconButton = styled.button`
     opacity: 0.5;
     cursor: not-allowed;
   }
+`;
+
+const Fixed = styled.header`
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  background: #121a2a;
+  z-index: 10;
 `;
