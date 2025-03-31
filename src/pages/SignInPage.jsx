@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Lock, Mail, Eye, EyeOff, ArrowRight, Code, Github } from "lucide-react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const SignInPage = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,11 +26,16 @@ const SignInPage = () => {
     setTimeout(() => setIsLoading(false), 1500);
   };
 
+  const navigateToHome = (e) => {
+    e.preventDefault();
+    navigate('/')
+  }
+
   return (
     <AuthContainer>
       <AuthCard>
         <AuthHeader>
-          <Logo>
+          <Logo onClick={navigateToHome}>
             <Code size={28} />
             <span>CodeToVideo</span>
           </Logo>
@@ -119,11 +126,11 @@ const AuthContainer = styled.div`
 const AuthCard = styled.div`
   width: 100%;
   max-width: 480px;
-  background: var(--surface);
-  border-radius: var(--radii-xl);
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
   padding: 2.5rem;
   box-shadow: var(--shadows-xl);
-  border: 1px solid var(--border);
+  border: 1px solid var(--color-border);
 `;
 
 const AuthHeader = styled.div`
@@ -131,29 +138,30 @@ const AuthHeader = styled.div`
   margin-bottom: 2rem;
 `;
 
-const Logo = styled.div`
+const Logo =  styled.button`
+  all: unset;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--color-primary);
   margin-bottom: 1.5rem;
 
   svg {
-    color: var(--primary);
+    color: var(--color-primary-dark);
   }
 `;
 
 const AuthTitle = styled.h1`
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   margin-bottom: 0.5rem;
 `;
 
 const AuthSubtitle = styled.p`
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
 `;
 
@@ -172,26 +180,26 @@ const FormGroup = styled.div`
 const InputLabel = styled.label`
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 `;
 
 const InputWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  background: var(--surface-alt);
-  border-radius: var(--radii-lg);
-  border: 1px solid var(--border);
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
   padding: 0.75rem 1rem;
   transition: all 0.2s;
 
   &:focus-within {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--primary-light);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
   }
 
   svg {
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
     margin-right: 0.75rem;
   }
 `;
@@ -200,19 +208,19 @@ const Input = styled.input`
   flex: 1;
   border: none;
   background: transparent;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   font-size: 0.9375rem;
   outline: none;
 
   &::placeholder {
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
   }
 `;
 
 const PasswordToggle = styled.button`
   background: transparent;
   border: none;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
   cursor: pointer;
   padding: 0.25rem;
   display: flex;
@@ -220,13 +228,13 @@ const PasswordToggle = styled.button`
   justify-content: center;
 
   &:hover {
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
   }
 `;
 
 const ErrorText = styled.span`
   font-size: 0.75rem;
-  color: var(--error);
+  color: var(--color-error);
 `;
 
 const SubmitButton = styled.button`
@@ -234,11 +242,11 @@ const SubmitButton = styled.button`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
   color: white;
   border: none;
   padding: 0.875rem 1.5rem;
-  border-radius: var(--radii-lg);
+  border-radius: var(--radius-lg);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
@@ -246,7 +254,7 @@ const SubmitButton = styled.button`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px var(--primary-shadow);
+    box-shadow: 0 4px 15px var(--shadow-md);
   }
 
   &:disabled {
@@ -261,12 +269,12 @@ const AuthFooter = styled.div`
   justify-content: center;
   gap: 0.5rem;
   font-size: 0.875rem;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
   margin: 1.5rem 0;
 `;
 
 const AuthLink = styled.a`
-  color: var(--primary);
+  color: var(--color-primary);
   font-weight: 500;
   text-decoration: none;
 
@@ -279,7 +287,7 @@ const Divider = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
   font-size: 0.875rem;
   margin: 1.5rem 0;
 
@@ -287,7 +295,7 @@ const Divider = styled.div`
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--border);
+    background: var(--color-border);
   }
 `;
 
@@ -302,18 +310,18 @@ const SocialButton = styled.button`
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  background: var(--surface-alt);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
+  background: var(--color-surface-alt);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
   padding: 0.75rem 1.5rem;
-  border-radius: var(--radii-lg);
+  border-radius: var(--radius-lg);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    background: var(--surface);
-    border-color: var(--border-dark);
+    background: var(--color-surface);
+    border-color: var(--color-border-dark);
   }
 `;
 

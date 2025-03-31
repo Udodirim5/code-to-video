@@ -25,7 +25,7 @@ const App = () => {
         </Route>
 
         {/* Direct pages */}
-        {/* <Route path="/signup" element={<SignUpPage />} /> */}
+        <Route path="/signup" element={<SignUpPage />} />
       <Route path="/signin" element={<SignInPage />} />
 
         {/* Catch-all route for 404 */}
