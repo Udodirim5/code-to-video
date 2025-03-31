@@ -33,15 +33,16 @@ const Button = styled.button`
   background: none;
   border: none;
   padding: 0.4rem;
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--radius-);
   transform: translateX(0.8rem);
   transition: all 0.2s;
   position: absolute;
   top: 1.2rem;
   right: 1.9rem;
+  color: var(--color-text-tertiary);
 
   &:hover {
-    background-color: var(--color-grey-100);
+    background-color: var(--color-text-inverted);
   }
 
   & svg {

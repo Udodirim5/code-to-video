@@ -51,7 +51,15 @@ const VideoSettings = () => {
   });
 
   const toggleSection = (section) => {
-    setActiveSection((prev) => (prev === section ? null : section));
+    setActiveSection((prev) => {
+      const newSection = prev === section ? null : section;
+      localStorage.setItem("activeSection", newSection || "");
+      return newSection;
+    });
+  };
+
+  const handleSectionClick = (e) => {
+    e.stopPropagation(); // Prevents child clicks from affecting parent toggle
   };
 
   const handleChange = (e) => {
@@ -99,7 +107,7 @@ const VideoSettings = () => {
         </SectionHeader>
 
         {activeSection === "canvas" && (
-          <SectionContent>
+          <SectionContent onClick={handleSectionClick}>
             <SettingGroup>
               <label>Resolution</label>
               <Select
@@ -195,7 +203,7 @@ const VideoSettings = () => {
         </SectionHeader>
 
         {activeSection === "animation" && (
-          <SectionContent>
+          <SectionContent onClick={handleSectionClick}>
             <SettingGroup>
               <label>Typing Speed</label>
               <SliderContainer>
@@ -273,7 +281,7 @@ const VideoSettings = () => {
         </SectionHeader>
 
         {activeSection === "export" && (
-          <SectionContent>
+          <SectionContent onClick={handleSectionClick}>
             <SettingGroup>
               <label>Output Format</label>
               <Select
@@ -334,7 +342,7 @@ const VideoSettings = () => {
         </SectionHeader>
 
         {activeSection === "editor" && (
-          <SectionContent>
+          <SectionContent onClick={handleSectionClick}>
             <SettingGroup>
               <label>Syntax Theme</label>
               <Select
@@ -380,7 +388,7 @@ const VideoSettings = () => {
         </SectionHeader>
 
         {activeSection === "audio" && (
-          <SectionContent>
+          <SectionContent onClick={handleSectionClick}>
             <ToggleGroup>
               <ToggleLabel>
                 <input
@@ -435,7 +443,7 @@ const VideoSettings = () => {
         </SectionHeader>
 
         {activeSection === "branding" && (
-          <SectionContent>
+          <SectionContent onClick={handleSectionClick}>
             <ToggleGroup>
               <ToggleLabel>
                 <input
