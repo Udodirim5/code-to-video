@@ -5,24 +5,10 @@ import styled from 'styled-components';
 const PricingPage = () => {
   const [billingCycle, setBillingCycle] = useState('monthly'); // Fixed: simple string state
   const plans = [
-    {
-      name: 'Free',
-      price: '0',
-      description: 'Perfect for trying out basic features',
-      cta: 'Get Started',
-      featured: false,
-      features: [
-        '2 videos per day',
-        '720p resolution',
-        'Basic themes',
-        'Watermark on exports',
-        'Community support'
-      ],
-      icon: <Code />
-    },
+
     {
       name: 'Starter',
-      price: billingCycle === 'yearly' ? '8' : '10',
+      price: billingCycle === 'yearly' ? '9' : '90',
       description: 'For individual creators getting started',
       cta: 'Start Free Trial',
       featured: false,
@@ -38,7 +24,7 @@ const PricingPage = () => {
     },
     {
       name: 'Pro',
-      price: billingCycle === 'yearly' ? '16' : '20',
+      price: billingCycle === 'yearly' ? '19' : '190',
       description: 'For professionals and power users',
       cta: 'Start Free Trial',
       featured: true,
@@ -55,7 +41,7 @@ const PricingPage = () => {
     },
     {
       name: 'Team',
-      price: billingCycle === 'yearly' ? '40' : '50',
+      price: billingCycle === 'yearly' ? '49' : '490',
       description: 'For teams and organizations',
       cta: 'Contact Sales',
       featured: false,
@@ -69,6 +55,21 @@ const PricingPage = () => {
         'Custom SLAs'
       ],
       icon: <Users />
+    },
+    {
+      name: 'Free',
+      price: '0',
+      description: 'Perfect for trying out basic features',
+      cta: 'Get Started',
+      featured: false,
+      features: [
+        '2 videos per day',
+        '720p resolution',
+        'Basic themes',
+        'Watermark on exports',
+        'Community support'
+      ],
+      icon: <Code />
     }
   ];
 
@@ -165,7 +166,7 @@ const PricingPage = () => {
 const PricingContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--space-12) var(--space-6);
+  padding: var(--space-24) var(--space-6) var(--space-12);
 `;
 
 const PricingHeader = styled.div`
