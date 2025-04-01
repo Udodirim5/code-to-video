@@ -40,8 +40,8 @@ const Header = () => {
         <NavLinks>
           <NavLink to="#features">Features</NavLink>
           <NavLink to="/about">About</NavLink>
-          <NavLink to="#pricing">Pricing</NavLink>
-          <NavLink to="#docs">Docs</NavLink>
+          <NavLink to="/pricing">Pricing</NavLink>
+          <NavLink to="/docs">Docs</NavLink>
         </NavLinks>
 
         <AuthButtons>
@@ -57,8 +57,8 @@ const Header = () => {
       <MobileMenu ref={ref} open={mobileMenuOpen}>
         <NavLink to="#features">Features</NavLink>
         <NavLink to="/about">About</NavLink>
-        <NavLink to="#pricing">Pricing</NavLink>
-        <NavLink to="#docs">Docs</NavLink>
+        <NavLink to="/pricing">Pricing</NavLink>
+        <NavLink to="/docs">Docs</NavLink>
         <MobileAuthButtons>
           <MobileLoginButton>Log in</MobileLoginButton>
           <MobileSignUpButton>Sign up free</MobileSignUpButton>
