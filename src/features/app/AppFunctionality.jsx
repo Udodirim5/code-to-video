@@ -28,7 +28,7 @@ const defaultSettings = {
   backgroundMusic: false,
   typingSounds: false,
   soundSync: false,
-  watermark: false,
+  watermark: true,
   branding: "CodeToVideo",
 };
 
@@ -65,8 +65,49 @@ const AppFunctionality = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Frame Rate Effect
+  useEffect(() => {
+    if (settings.frameByFrame) {
+      document.addEventListener("keydown", handleNextFrame);
+      return () => document.removeEventListener("keydown", handleNextFrame);
+    }
+  }, [settings.frameByFrame, typedCode]);
 
+  const handleNextFrame = () => {
+    if (!settings.frameByFrame || !isAnimating) return;
 
+    if (animationRef.current) {
+      clearInterval(animationRef.current);
+    }
+
+    if (typedCode.length < code.length) {
+      setTypedCode(code.slice(0, typedCode.length + 1));
+      renderFrame(
+        canvasRef.current.getContext("2d"),
+        code.slice(0, typedCode.length + 1)
+      );
+    } else {
+      setIsAnimating(false);
+      mediaRecorderRef.current.stop();
+    }
+  };
+
+  const playSound = (type) => {
+    if (!settings.typingSounds && type === "typing") return;
+    if (!settings.backgroundMusic && type === "background") return;
+
+    const sound = new Audio(
+      type === "typing" ? "/sounds/keypress.mp3" : "/sounds/background.mp3"
+    );
+
+    if (type === "background") {
+      sound.loop = true;
+    }
+
+    sound.play();
+  };
+
+  // Play typing sound when animating
 
   const startAnimation = () => {
     setIsAnimating(true);
@@ -75,12 +116,14 @@ const AppFunctionality = () => {
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    canvas.width = settings.width;   // 800
-    canvas.height = settings.height;  // 400
+    canvas.width = settings.width; // 800
+    canvas.height = settings.height; // 400
 
-    const stream = canvas.captureStream();
+    const stream = canvas.captureStream(
+      settings.frameRate * settings.playbackSpeed
+    ); 
     mediaRecorderRef.current = new MediaRecorder(stream, {
-      mimeType: "video/webm",
+      mimeType: settings.outputFormat === "MP4" ? "video/mp4" : "video/webm",
     });
     mediaRecorderRef.current.ondataavailable = (event) =>
       recordedChunksRef.current.push(event.data);
@@ -98,6 +141,24 @@ const AppFunctionality = () => {
         mediaRecorderRef.current.stop();
       }
     }, 500 / settings.typingSpeed);
+
+    if (settings.backgroundMusic) playSound("background");
+
+    animationRef.current = setInterval(
+      () => {
+        if (i <= code.length) {
+          setTypedCode(code.slice(0, i));
+          renderFrame(ctx, code.slice(0, i));
+          playSound("typing"); // Play sound effect
+          i++;
+        } else {
+          clearInterval(animationRef.current);
+          setIsAnimating(false);
+          mediaRecorderRef.current.stop();
+        }
+      },
+      1000 / settings.typingSpeed / settings.playbackSpeed
+    );
   };
 
   const renderFrame = (ctx, text) => {
@@ -114,19 +175,29 @@ const AppFunctionality = () => {
     const visibleLines = lines.slice(start);
 
     visibleLines.forEach((line, index) => {
-      // ctx.fillText(line, 20, 50 + index * 24);
+      const yPos = 50 + index * (settings.fontSize * 1.5);
+      if (settings.lineNumbers) {
+        ctx.fillText(`${start + index + 1}. `, 5, yPos); // Add line numbers
+      }
       ctx.fillText(line, 20, 50 + index * (settings.fontSize * 1.5)); // Adjust line spacing
     });
 
     // Blinking Cursor
-    if (showCursor) {
-      const lastLine = visibleLines[visibleLines.length - 1] || "";
-      ctx.fillText(
-        "|",
-        20 + ctx.measureText(lastLine).width,
-        50 + (visibleLines.length - 1) * (settings.fontSize * 1.5)
+    const lastLine = visibleLines[visibleLines.length - 1] || "";
+    ctx.fillText(
+      "|",
+      20 + ctx.measureText(lastLine).width,
+      50 + (visibleLines.length - 1) * (settings.fontSize * 1.5)
+    );
 
-        // 50 + (visibleLines.length - 1) * 24
+    // Draw watermark if enabled
+    if (settings.watermark) {
+      ctx.font = "12px Arial";
+      ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+      ctx.fillText(
+        "© " + settings.branding,
+        settings.width - 120,
+        settings.height - 10
       );
     }
   };
