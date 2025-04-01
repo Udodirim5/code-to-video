@@ -8,32 +8,65 @@ import { Download, Play, RotateCcw, Settings } from "lucide-react";
 import Modal from "../../ui/Modal";
 import VideoSettings from "./VideoSettings";
 
+const defaultSettings = {
+  resolution: "1080p",
+  width: 800,
+  height: 400,
+  backgroundColor: "#121a2a",
+  textColor: "#ffffff",
+  fontFamily: "Fira",
+  fontSize: 16,
+  typingSpeed: 3,
+  frameRate: 30,
+  duration: 10,
+  playbackSpeed: 1,
+  outputFormat: "MP4",
+  compressionQuality: "High",
+  frameByFrame: false,
+  syntaxTheme: "Dracula",
+  lineNumbers: true,
+  backgroundMusic: false,
+  typingSounds: false,
+  soundSync: false,
+  watermark: false,
+  branding: "CodeToVideo",
+};
+
 const AppFunctionality = () => {
+  const [settings, setSettings] = useState(defaultSettings);
   const [code, setCode] = useState(
     `// Welcome to CodeAnim\nfunction helloWorld() {\n  console.log('Hello, World!');\n  return "Animation complete!";\n}`
   );
   const [typedCode, setTypedCode] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
   const [showCursor, setShowCursor] = useState(true);
+
+  // Refs
   const animationRef = useRef(null);
-  const cursorRef = useRef(null);
   const canvasRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const recordedChunksRef = useRef([]);
-  const outputRef = useRef(null);
 
+  // Scroll to the bottom of output when code updates
   useEffect(() => {
-    cursorRef.current = setInterval(() => {
+    setTimeout(() => {
+      const outputElement = document.getElementById("output");
+      if (outputElement) {
+        outputElement.scrollTop = outputElement.scrollHeight;
+      }
+    }, 0);
+  }, [typedCode]);
+
+  // Cursor Blinking Effect
+  useEffect(() => {
+    const interval = setInterval(() => {
       setShowCursor((prev) => !prev);
     }, 500);
-    return () => clearInterval(cursorRef.current);
+    return () => clearInterval(interval);
   }, []);
 
-  setTimeout(() => {
-    if (outputRef.current) {
-      outputRef.current.scrollTop = outputRef.current.scrollHeight;
-    }
-  }, 0);
+
+
 
   const startAnimation = () => {
     setIsAnimating(true);
@@ -42,8 +75,8 @@ const AppFunctionality = () => {
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    canvas.width = 800;
-    canvas.height = 400;
+    canvas.width = settings.width;   // 800
+    canvas.height = settings.height;  // 400
 
     const stream = canvas.captureStream();
     mediaRecorderRef.current = new MediaRecorder(stream, {
@@ -64,22 +97,25 @@ const AppFunctionality = () => {
         setIsAnimating(false);
         mediaRecorderRef.current.stop();
       }
-    }, 100);
+    }, 500 / settings.typingSpeed);
   };
 
   const renderFrame = (ctx, text) => {
-    ctx.fillStyle = "#0a0e17";
-    ctx.fillRect(0, 0, 800, 400);
-    ctx.font = "20px Fira Code";
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = settings.backgroundColor;
+    ctx.fillRect(0, 0, settings.width, settings.height);
+    ctx.font = `${settings.fontSize}px ${settings.fontFamily} monospace`;
+    ctx.fillStyle = settings.textColor;
 
     const lines = text.split("\n");
-    const maxLines = Math.floor(360 / 24);
+    // const maxLines = Math.floor(360 / 24);
+    const maxLines = Math.floor(settings.height / (settings.fontSize * 1.5)); // Adjust max lines based on font size
+
     const start = Math.max(0, lines.length - maxLines);
     const visibleLines = lines.slice(start);
 
     visibleLines.forEach((line, index) => {
-      ctx.fillText(line, 20, 50 + index * 24);
+      // ctx.fillText(line, 20, 50 + index * 24);
+      ctx.fillText(line, 20, 50 + index * (settings.fontSize * 1.5)); // Adjust line spacing
     });
 
     // Blinking Cursor
@@ -88,7 +124,9 @@ const AppFunctionality = () => {
       ctx.fillText(
         "|",
         20 + ctx.measureText(lastLine).width,
-        50 + (visibleLines.length - 1) * 24
+        50 + (visibleLines.length - 1) * (settings.fontSize * 1.5)
+
+        // 50 + (visibleLines.length - 1) * 24
       );
     }
   };
@@ -153,7 +191,10 @@ const AppFunctionality = () => {
                   </IconButton>
                 </Modal.Open>
                 <Modal.Window name="window1">
-                  <VideoSettings />
+                  <VideoSettings
+                    settings={settings}
+                    setSettings={setSettings}
+                  />
                 </Modal.Window>
               </Modal>
 
@@ -176,7 +217,7 @@ const AppFunctionality = () => {
           <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
 
           <div
-            ref={outputRef}
+            id="output"
             style={{
               flex: 1,
               overflow: "auto",

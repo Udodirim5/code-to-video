@@ -14,41 +14,8 @@ import {
 } from "lucide-react";
 import styled from "styled-components";
 
-const VideoSettings = () => {
+const VideoSettings = ({ settings, setSettings }) => {
   const [activeSection, setActiveSection] = useState(null);
-  const [settings, setSettings] = useState({
-    // Canvas Settings
-    resolution: "1080p",
-    width: 1920,
-    height: 1080,
-    backgroundColor: "#121a2a",
-    fontFamily: "Inter",
-    fontSize: 16,
-
-    // Animation & Timing
-    typingSpeed: 3,
-    frameRate: 30,
-    duration: 10,
-    playbackSpeed: 1,
-
-    // Export Options
-    outputFormat: "MP4",
-    compressionQuality: "High",
-    frameByFrame: false,
-
-    // Code Editor
-    syntaxTheme: "Dracula",
-    lineNumbers: true,
-
-    // Audio
-    backgroundMusic: false,
-    typingSounds: false,
-    soundSync: false,
-
-    // Watermark
-    watermark: false,
-    branding: "CodeToVideo",
-  });
 
   const toggleSection = (section) => {
     setActiveSection((prev) => {
@@ -71,11 +38,12 @@ const VideoSettings = () => {
     }));
   };
 
-  const handleColorChange = (color) => {
+  const handleColorChange = (key) => (color) => {
     if (/^#[0-9A-Fa-f]{6}$/.test(color)) {
-      setSettings((prev) => ({ ...prev, backgroundColor: color }));
+      setSettings((prev) => ({ ...prev, [key]: color }));
     }
   };
+  
 
   const resolutionOptions = [
     { value: "720p", label: "720p (1280×720)" },
@@ -83,7 +51,7 @@ const VideoSettings = () => {
     { value: "4K", label: "4K (3840×2160)" },
   ];
 
-  const fontOptions = ["Inter", "Poppins", "Roboto", "Monospace"];
+  const fontOptions = ["Inter", "Poppins", "Roboto", "Fira", "Monospace"];
   const themeOptions = ["Dark", "Light", "Solarized", "Dracula"];
   const frameRateOptions = [24, 30, 60];
   const speedOptions = [0.5, 1, 1.5, 2];
@@ -152,9 +120,21 @@ const VideoSettings = () => {
                 <input
                   type="color"
                   value={settings.backgroundColor}
-                  onChange={(e) => handleColorChange(e.target.value)}
+                  onChange={(e) => handleColorChange("backgroundColor")(e.target.value)}
                 />
                 <span>{settings.backgroundColor}</span>
+              </ColorInput>
+            </SettingGroup>
+
+            <SettingGroup>
+              <label>Text Color</label>
+              <ColorInput>
+                <input
+                  type="color"
+                  value={settings.textColor}
+                  onChange={(e) => handleColorChange("textColor")(e.target.value)}
+                  />
+                <span>{settings.textColor}</span>
               </ColorInput>
             </SettingGroup>
 
@@ -211,8 +191,8 @@ const VideoSettings = () => {
                   type="range"
                   name="typingSpeed"
                   min="1"
-                  max="5"
-                  step="0.1"
+                  max="10"
+                  step="0.5"
                   value={settings.typingSpeed}
                   onChange={handleChange}
                 />
