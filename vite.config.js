@@ -5,5 +5,6 @@ export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
     include: ['@uiw/codemirror-theme-dracula']
-  }
+  },
+  base: '/cozy-comfort-crew/', // Set the base path for your project
 });
