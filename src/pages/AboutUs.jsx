@@ -294,7 +294,7 @@ const StatsSection = styled(Section)`
 
 const StatsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: var(--space-8);
   max-width: 800px;
   margin: 0 auto;
