@@ -4,9 +4,9 @@ import Hero from "../features/home/Hero";
 import Features from "../features/home/Features";
 import BitAbout from "../features/home/BitAbout";
 import PricingAtHome from "../features/home/PricingAtHome";
+import { Link } from "react-router-dom";
 
 const Homepage = () => {
-
   return (
     <Container>
       <Hero />
@@ -17,8 +17,10 @@ const Homepage = () => {
       {/* Footer CTA */}
       <CTASection>
         <CTATitle>Ready to animate your code?</CTATitle>
-        <CTAButton >
-          Get Started - It's Free <ArrowRight size={18} />
+        <CTAButton>
+          <Link to="/signin">
+            Get Started - It's Free <ArrowRight size={18} />
+          </Link>
         </CTAButton>
       </CTASection>
     </Container>
@@ -43,27 +45,6 @@ const Section = styled.section`
   position: relative;
 `;
 
-const CTAButton = styled.button`
-  background: linear-gradient(135deg, #6e45e2 0%, #88d3ce 100%);
-  color: white;
-  border: none;
-  padding: 16px 32px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(110, 69, 226, 0.4);
-  }
-`;
 
 const CTASection = styled(Section)`
   text-align: center;
@@ -76,4 +57,41 @@ const CTATitle = styled.h2`
   margin: 0 auto 40px;
   max-width: 600px;
   line-height: 1.3;
+`;
+
+const CTAButton = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-secondary) 100%
+  );
+  color: white;
+  border: none;
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(138, 110, 255, 0.4);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+  }
 `;

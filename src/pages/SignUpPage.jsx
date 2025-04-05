@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -35,18 +35,15 @@ const SignUpPage = () => {
     console.log("Signing up with:", formData);
   };
 
-  const navigateToHome = (e) => {
-    e.preventDefault();
-    navigate("/");
-  };
-
   return (
     <AuthContainer>
       <AuthCard>
         <AuthHeader>
-          <Logo onClick={navigateToHome}>
-            <Code size={28} />
-            <span>CodeToVideo</span>
+          <Logo>
+            <Link to="/">
+              <Code size={28} />
+              <span>CodeToVideo</span>
+            </Link>
           </Logo>
           <AuthTitle>Create your account</AuthTitle>
           <AuthSubtitle>Start animating your code in minutes</AuthSubtitle>
@@ -126,7 +123,9 @@ const SignUpPage = () => {
 
         <AuthFooter>
           <span>Already have an account?</span>
-          <AuthLink href="/signin">Sign in instead</AuthLink>
+          <AuthLink>
+            <Link to="/signin">Sign in instead</Link>
+          </AuthLink>
         </AuthFooter>
 
         <Divider>
@@ -177,16 +176,22 @@ const AuthHeader = styled.div`
 
 const Logo = styled.button`
   all: unset;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-primary);
   margin-bottom: 1.5rem;
 
-  svg {
-    color: var(--color-primary-dark);
+  a {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    cursor: pointer;
+
+    span {
+      color: var(--color-text-primary);
+    }
   }
 `;
 
@@ -314,13 +319,15 @@ const AuthFooter = styled.div`
   margin: 1.5rem 0;
 `;
 
-const AuthLink = styled.a`
-  color: var(--color-primary);
-  font-weight: 500;
-  text-decoration: none;
+const AuthLink = styled.span`
+  a {
+    color: var(--color-primary);
+    font-weight: 500;
+    text-decoration: none;
 
-  &:hover {
-    text-decoration: underline;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 

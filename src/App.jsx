@@ -11,6 +11,7 @@ import ErrorPage from "./pages/ErrorPage";
 import theme from "./utils/theme";
 import AboutPage from "./pages/AboutUs";
 import PricingPage from "./pages/PricingPage";
+import DocumentationPage from "./pages/Documentations";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route index element={<Homepage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="pricing" element={<PricingPage />} />
+          <Route path="docs" element={<DocumentationPage />} />
         </Route>
 
         {/* App Layout for /app functionality */}

@@ -1,6 +1,8 @@
 import { ArrowRight, Link, Play } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Modal from "../../ui/Modal";
+import DemoVideo from "./DemoVideo";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -21,9 +23,17 @@ const Hero = () => {
           Try It Free <ArrowRight size={18} />
         </CTAButton>
         <DemoPreview>
-          <PlayCircle>
-            <Play size={48} fill="white" color="white" />
-          </PlayCircle>
+          <Modal>
+            <Modal.Open opensWindowName="demoVideo">
+              <PlayCircle>
+                <Play size={48} fill="white" color="white" />
+              </PlayCircle>
+            </Modal.Open>
+
+            <Modal.Window name="demoVideo">
+              <DemoVideo />
+            </Modal.Window>
+          </Modal>
           <DemoLabel>See how it works</DemoLabel>
         </DemoPreview>
       </HeroContent>
@@ -86,6 +96,10 @@ const HeroTitle = styled.h1`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1.2;
+
+  @media screen and (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const HeroSubtitle = styled.p`

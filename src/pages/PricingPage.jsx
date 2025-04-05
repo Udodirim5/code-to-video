@@ -1,76 +1,75 @@
-import { Check, Zap, Code, Users, ArrowRight } from 'lucide-react';
-import { useState } from 'react';
-import styled from 'styled-components';
+import { Check, Zap, Code, Users, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import styled from "styled-components";
 
 const PricingPage = () => {
-  const [billingCycle, setBillingCycle] = useState('monthly'); // Fixed: simple string state
+  const [billingCycle, setBillingCycle] = useState("monthly");
   const plans = [
-
     {
-      name: 'Starter',
-      price: billingCycle === 'yearly' ? '9' : '90',
-      description: 'For individual creators getting started',
-      cta: 'Start Free Trial',
+      name: "Starter",
+      price: billingCycle === "yearly" ? "90" : "9",
+      description: "For individual creators getting started",
+      cta: "Start Free Trial",
       featured: false,
       features: [
-        '10 videos per day',
-        '1080p resolution',
-        'Premium themes',
-        'No watermark',
-        'Email support',
-        'Custom branding'
+        "10 videos per day",
+        "1080p resolution",
+        "Premium themes",
+        "No watermark",
+        "Email support",
+        "Custom branding",
       ],
-      icon: <Zap />
+      icon: <Zap />,
     },
     {
-      name: 'Pro',
-      price: billingCycle === 'yearly' ? '19' : '190',
-      description: 'For professionals and power users',
-      cta: 'Start Free Trial',
+      name: "Pro",
+      price: billingCycle === "yearly" ? "190" : "19",
+      description: "For professionals and power users",
+      cta: "Start Free Trial",
       featured: true,
       features: [
-        '50 videos per day',
-        '4K resolution',
-        'All premium themes',
-        'Priority support',
-        'Advanced analytics',
-        'API access',
-        'Custom fonts'
+        "50 videos per day",
+        "4K resolution",
+        "All premium themes",
+        "Priority support",
+        "Advanced analytics",
+        "API access",
+        "Custom fonts",
       ],
-      icon: <Zap />
+      icon: <Zap />,
     },
     {
-      name: 'Team',
-      price: billingCycle === 'yearly' ? '49' : '490',
-      description: 'For teams and organizations',
-      cta: 'Contact Sales',
+      name: "Team",
+      price: billingCycle === "yearly" ? "490" : "49",
+      description: "For teams and organizations",
+      cta: "Contact Sales",
       featured: false,
       features: [
-        'Unlimited videos',
-        '4K resolution',
-        'All premium features',
-        'Dedicated support',
-        'Team collaboration',
-        'SSO & advanced security',
-        'Custom SLAs'
+        "Unlimited videos",
+        "4K resolution",
+        "All premium features",
+        "Dedicated support",
+        "Team collaboration",
+        "SSO & advanced security",
+        "Custom SLAs",
       ],
-      icon: <Users />
+      icon: <Users />,
     },
     {
-      name: 'Free',
-      price: '0',
-      description: 'Perfect for trying out basic features',
-      cta: 'Get Started',
+      name: "Free",
+      price: "0",
+      description: "Perfect for trying out basic features",
+      cta: "Get Started",
       featured: false,
       features: [
-        '2 videos per day',
-        '720p resolution',
-        'Basic themes',
-        'Watermark on exports',
-        'Community support'
+        "2 videos per day",
+        "720p resolution",
+        "Basic themes",
+        "Watermark on exports",
+        "Community support",
       ],
-      icon: <Code />
-    }
+      icon: <Code />,
+    },
   ];
 
   const handleBillingChange = (cycle) => {
@@ -81,18 +80,20 @@ const PricingPage = () => {
     <PricingContainer>
       <PricingHeader>
         <h1>Simple, transparent pricing</h1>
-        <p>Choose the plan that fits your needs. Start free, upgrade anytime.</p>
-        
+        <p>
+          Choose the plan that fits your needs. Start free, upgrade anytime.
+        </p>
+
         <ToggleContainer>
-          <ToggleButton 
-            active={billingCycle === 'monthly'}
-            onClick={() => handleBillingChange('monthly')}
+          <ToggleButton
+            active={billingCycle === "monthly"}
+            onClick={() => handleBillingChange("monthly")}
           >
             Monthly
           </ToggleButton>
-          <ToggleButton 
-            active={billingCycle === 'yearly'}
-            onClick={() => handleBillingChange('yearly')}
+          <ToggleButton
+            active={billingCycle === "yearly"}
+            onClick={() => handleBillingChange("yearly")}
           >
             Yearly <SaveBadge>Save 20%</SaveBadge>
           </ToggleButton>
@@ -107,11 +108,12 @@ const PricingPage = () => {
               <PlanIcon>{plan.icon}</PlanIcon>
               <PlanName>{plan.name}</PlanName>
               <PlanPrice>
-                ${plan.price}<small>/mo</small>
+                ${plan.price}
+                <small>/mo</small>
               </PlanPrice>
               <PlanDescription>{plan.description}</PlanDescription>
             </PlanHeader>
-            
+
             <PlanFeatures>
               {plan.features.map((feature, i) => (
                 <FeatureItem key={i}>
@@ -120,18 +122,20 @@ const PricingPage = () => {
                 </FeatureItem>
               ))}
             </PlanFeatures>
-            
+
             <PlanButton featured={plan.featured}>
-              {plan.cta} {plan.name !== 'Team' && <ArrowRight size={16} />}
+              {plan.cta} {plan.name !== "Team" && <ArrowRight size={16} />}
             </PlanButton>
           </PlanCard>
         ))}
       </PlansGrid>
 
-
       <EnterpriseSection>
         <h2>Need enterprise-grade features?</h2>
-        <p>Custom solutions for large organizations with specialized requirements.</p>
+        <p>
+          Custom solutions for large organizations with specialized
+          requirements.
+        </p>
         <EnterpriseButton>
           Contact Sales <ArrowRight size={16} />
         </EnterpriseButton>
@@ -142,25 +146,39 @@ const PricingPage = () => {
         <FAQGrid>
           <FAQItem>
             <h3>Can I switch plans later?</h3>
-            <p>Yes, you can upgrade or downgrade at any time. We'll prorate the difference.</p>
+            <p>
+              Yes, you can upgrade or downgrade at any time. We'll prorate the
+              difference.
+            </p>
           </FAQItem>
           <FAQItem>
             <h3>Is there a free trial?</h3>
-            <p>All paid plans come with a 14-day free trial. No credit card required.</p>
+            <p>
+              All paid plans come with a 14-day free trial. No credit card
+              required.
+            </p>
           </FAQItem>
           <FAQItem>
             <h3>What payment methods do you accept?</h3>
-            <p>We accept all major credit cards, PayPal, and bank transfers for annual plans.</p>
+            <p>
+              We accept all major credit cards, PayPal, and bank transfers for
+              annual plans.
+            </p>
           </FAQItem>
           <FAQItem>
             <h3>How do I cancel my subscription?</h3>
-            <p>You can cancel anytime from your account settings with just a few clicks.</p>
+            <p>
+              You can cancel anytime from your account settings with just a few
+              clicks.
+            </p>
           </FAQItem>
         </FAQGrid>
       </FAQSection>
     </PricingContainer>
   );
 };
+
+export default PricingPage;
 
 // Styled Components
 const PricingContainer = styled.div`
@@ -176,7 +194,11 @@ const PricingHeader = styled.div`
   h1 {
     font-size: var(--font-size-3xl);
     margin-bottom: var(--space-3);
-    background: linear-gradient(90deg, var(--color-text-primary), var(--color-primary));
+    background: linear-gradient(
+      90deg,
+      var(--color-text-primary),
+      var(--color-primary)
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -201,8 +223,10 @@ const ToggleContainer = styled.div`
 const ToggleButton = styled.button`
   position: relative;
   border: none;
-  background: ${({ active }) => active ? 'var(--color-surface)' : 'transparent'};
-  color: ${({ active }) => active ? 'var(--color-text-primary)' : 'var(--color-text-secondary)'};
+  background: ${({ active }) =>
+    active ? "var(--color-surface)" : "transparent"};
+  color: ${({ active }) =>
+    active ? "var(--color-text-primary)" : "var(--color-text-secondary)"};
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-full);
   font-weight: 500;
@@ -232,20 +256,26 @@ const PlanCard = styled.div`
   background: var(--color-surface);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
-  border: 1px solid ${({ featured }) => 
-    featured ? 'var(--color-primary)' : 'var(--color-border)'};
+  border: 1px solid
+    ${({ featured }) =>
+      featured ? "var(--color-primary)" : "var(--color-border)"};
   position: relative;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
   display: flex;
   flex-direction: column;
 
-  ${({ featured }) => featured && `
+  ${({ featured }) =>
+    featured &&
+    `
     transform: scale(1.05);
     box-shadow: 0 10px 30px rgba(138, 110, 255, 0.2);
   `}
 
   &:hover {
-    transform: ${({ featured }) => featured ? 'scale(1.08)' : 'translateY(-5px)'};
+    transform: ${({ featured }) =>
+      featured ? "scale(1.08)" : "translateY(-5px)"};
     box-shadow: var(--shadow-lg);
   }
 `;
@@ -328,11 +358,12 @@ const PlanButton = styled.button`
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-lg);
   border: none;
-  background: ${({ featured }) => 
-    featured 
-      ? 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)' 
-      : 'var(--color-surface-alt)'};
-  color: ${({ featured }) => featured ? 'white' : 'var(--color-text-primary)'};
+  background: ${({ featured }) =>
+    featured
+      ? "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)"
+      : "var(--color-surface-alt)"};
+  color: ${({ featured }) =>
+    featured ? "white" : "var(--color-text-primary)"};
   font-weight: 600;
   cursor: pointer;
   display: flex;
@@ -343,8 +374,8 @@ const PlanButton = styled.button`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${({ featured }) => 
-      featured ? '0 4px 15px rgba(138, 110, 255, 0.4)' : 'var(--shadow-sm)'};
+    box-shadow: ${({ featured }) =>
+      featured ? "0 4px 15px rgba(138, 110, 255, 0.4)" : "var(--shadow-sm)"};
   }
 `;
 
@@ -417,5 +448,3 @@ const FAQItem = styled.div`
     font-size: var(--font-size-sm);
   }
 `;
-
-export default PricingPage;
