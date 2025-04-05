@@ -48,5 +48,4 @@ const CodePanel = styled.div`
   height: 100%;
   max-height: 46vh;
   min-height: 40vh;
-  border: 2px solid red;
 `;
