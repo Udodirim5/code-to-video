@@ -45,4 +45,8 @@ const CodePanel = styled.div`
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  height: 100%;
+  max-height: 46vh;
+  min-height: 40vh;
+  border: 2px solid red;
 `;
