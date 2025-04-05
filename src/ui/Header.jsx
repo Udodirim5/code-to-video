@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { Code, Github, Twitter, Linkedin, Menu, X } from "lucide-react";
 import styled from "styled-components";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
   const ref = useOutsideClick(() => setMobileMenuOpen(false));
 
   useEffect(() => {
@@ -26,6 +28,10 @@ const Header = () => {
     e.preventDefault();
     navigate("/signup");
   };
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   return (
     <HeaderContainer scrolled={scrolled}>
