@@ -30,7 +30,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    setMenuOpen(false);
+    setMobileMenuOpen(false);
   }, [location.pathname]);
 
   return (
