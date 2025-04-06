@@ -266,6 +266,12 @@ const DocsHeader = styled.header`
     svg {
       color: var(--color-primary);
     }
+
+    @media screen and (max-width: 768px) {
+      span {
+        font-size: var(--font-size-2xl);
+      }
+    }
   }
 
   p {
