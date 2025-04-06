@@ -269,7 +269,7 @@ const DocsHeader = styled.header`
     
     @media screen and (max-width: 768px) {
       h1 {
-        font-size: var(--font-size-2xl);
+        font-size: var(--font-size-base);
       }
     }
   }
