@@ -382,6 +382,14 @@ const CodeBlock = styled.pre`
   overflow-x: auto;
   border: 1px solid var(--color-border);
   margin: var(--space-4) 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.6;
+  
+  @media screen and (max-width: 768px) {
+    font-size: var(--font-size-xs);
+    padding: var(--space-3);
+  }
 `;
 
 const FeatureCard = styled.div`
