@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import Header from "../../ui/Header";
 import AppFunctionality from "./AppFunctionality";
+import { Outlet } from "react-router-dom";
 
 const AppLayout = () => {
   return (
     <>
       <Header />
       <Main>
-        <AppFunctionality />
+        <Outlet />
       </Main>
     </>
   );

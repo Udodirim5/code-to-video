@@ -1,15 +1,10 @@
-import { ArrowRight, Link, Play } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { ArrowRight, Play } from "lucide-react";
 import styled from "styled-components";
 import Modal from "../../ui/Modal";
 import DemoVideo from "./DemoVideo";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
-  const navigate = useNavigate();
-  const handleNavigate = (e) => {
-    e.preventDefault();
-    navigate("/app");
-  };
   return (
     <HeroSection>
       <HeroContent>
@@ -19,8 +14,10 @@ const Hero = () => {
           Animate your code snippets effortlessly and create shareable videos
           for tutorials, demos, and social media.
         </HeroSubtitle>
-        <CTAButton onClick={handleNavigate}>
-          Try It Free <ArrowRight size={18} />
+        <CTAButton>
+          <Link to="/dashboard">
+            Try It Free <ArrowRight size={18} />
+          </Link>
         </CTAButton>
         <DemoPreview>
           <Modal>
@@ -31,7 +28,7 @@ const Hero = () => {
             </Modal.Open>
 
             <Modal.Window name="demoVideo">
-              <DemoVideo />
+              <DemoVideo videoSrc="https://videos.pexels.com/video-files/6548176/6548176-hd_1920_1080_24fps.mp4" />
             </Modal.Window>
           </Modal>
           <DemoLabel>See how it works</DemoLabel>
@@ -110,25 +107,27 @@ const HeroSubtitle = styled.p`
   margin: 0 auto 40px;
 `;
 
-const CTAButton = styled.button`
-  background: linear-gradient(135deg, #6e45e2 0%, #88d3ce 100%);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
+const CTAButton = styled.div`
+  a {
+    background: linear-gradient(135deg, #6e45e2 0%, #88d3ce 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(110, 69, 226, 0.4);
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(110, 69, 226, 0.4);
+    }
   }
 `;
 

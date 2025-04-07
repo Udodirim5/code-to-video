@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
-const DemoVideo = () => {
+const DemoVideo = ({videoSrc}) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
@@ -47,7 +47,7 @@ const DemoVideo = () => {
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
       >
-        <source src="https://videos.pexels.com/video-files/6548176/6548176-hd_1920_1080_24fps.mp4" type="video/mp4" />
+        <source src={videoSrc} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 

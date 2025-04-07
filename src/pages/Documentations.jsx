@@ -246,13 +246,12 @@ const DocsContainer = styled.div`
   background: var(--color-background);
   color: var(--color-text-primary);
   font-family: var(--font-family);
-  
 `;
 
 const DocsHeader = styled.header`
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
-  padding: var(--space-20) var(--space-6) var(--space-4) ;
+  padding: var(--space-20) var(--space-6) var(--space-4);
   text-align: center;
 
   h1 {
@@ -266,11 +265,10 @@ const DocsHeader = styled.header`
     svg {
       color: var(--color-primary);
     }
-    
+
     @media screen and (max-width: 768px) {
-      h1 {
-        font-size: var(--font-size-base);
-      }
+      font-size: var(--font-size-xl);
+      margin: 0 0 var(--space-4) 0;
     }
   }
 
@@ -378,7 +376,6 @@ const ExportExample = styled.div`
   margin-bottom: var(--space-6);
 `;
 
-
 const CodeBlock = styled.pre`
   background: var(--color-surface-alt);
   border-radius: var(--radius-md);
@@ -391,7 +388,7 @@ const CodeBlock = styled.pre`
   white-space: pre-wrap;
   word-wrap: break-word;
   line-height: 1.6;
-  
+
   @media screen and (max-width: 768px) {
     font-size: var(--font-size-xs);
     padding: var(--space-3);

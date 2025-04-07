@@ -94,6 +94,6 @@
 }
 
 body {
-  background: #121a2a;
+  background: var(--color-surface);
   color: var(--color-text-primary);
 }

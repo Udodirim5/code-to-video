@@ -12,6 +12,7 @@ import theme from "./utils/theme";
 import AboutPage from "./pages/AboutUs";
 import PricingPage from "./pages/PricingPage";
 import DocumentationPage from "./pages/Documentations";
+import UserVideosPage from "./pages/UserVideosPage";
 
 const App = () => {
   return (
@@ -26,8 +27,9 @@ const App = () => {
         </Route>
 
         {/* App Layout for /app functionality */}
-        <Route path="/app" element={<AppLayout />}>
-          <Route index element={<AppFunctionality />} />
+        <Route element={<AppLayout />}>
+          <Route path="/app" element={<AppFunctionality />} />
+          <Route path="/dashboard" element={<UserVideosPage />} />
         </Route>
 
         {/* Direct pages */}
